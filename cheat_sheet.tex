@@ -47,7 +47,130 @@ $x = \frac{-fX}{Z}, y = \frac{-fY}{Z}$
 Projection of lines $\bX = \bA + \lambda\bD$:
 $\lim_{\lambda\to\infty}\bp=f\frac{\bA+\lambda\bD}{A_Z+\lambda D_Z}=f\frac{\bD}{D_Z}$
 \ruler
-Projection of planes: $\bX\cdot\bN = d$:
+Projection of planes $\bX\cdot\bN = d$:
 $\lim_{Z\to\infty}\bp\cdot\bN=0 \Rightarrow xN_x+yN_y+fN_z=0$
+\ruler
+Terrestrial perspective:\\
+Ground plane has normal $\bN = (0,1,0)$ and projects to $y=0$.\\
+Camera height $h_c$; an object of height $\delta Y$ with bottom at $(X, -h_c, Z)$ and
+top at $(X, \delta Y - h_c, Z)$. The bottom projects to $(fX/Z, -fh_c/Z)$ and
+top projects to $(fX/Z, f(\delta Y - h_c)/Z)$.
+
+\section{Geometric Transformations}
+\textbf{Pose}: the position and orientation of the object with respect to the camera.
+6 degrees of freedom.\\
+\textbf{Shape}: the coordinates of the points of an object relative to a coordinate frame
+on the object; invariant when the object undergoes rotations and translations.
+\ruler
+\textbf{Euclidean Transformations}: rotations and translation are isometries or
+regid body motions that preserves distances between any pair of points.
+\ruler
+\textbf{Orthogonal Transformations}:\\
+preserves inner products: $\ba\cdot\bb = \psi(\ba)\cdot\psi(\bb)$\\
+preserves norms: $\|\ba\| = \|\psi(\ba)\|$\\
+are isometries: $(\psi(\ba)-\psi(\bb))\cdot(\psi(\ba)-\psi(\bb)) = (\ba-\bb)\cdot(\ba-\bb)$
+\ruler
+\textbf{Orthogonal matrices}:\\
+$\tp{\bA} = \inv{\bA}$, $\det(\bA)^2 = 1 \Rightarrow \det(\bA) = +1 \mbox{ or } -1$.\\
+$\underbrace{
+\begin{bmatrix}
+\cos\theta & -\sin\theta\\
+\sin\theta & \cos\theta
+\end{bmatrix}
+}_{\text{rotation, $\det = +1$}}
+\underbrace{
+\begin{bmatrix}
+\cos\theta & \sin\theta\\
+\sin\theta & -\cos\theta
+\end{bmatrix}
+}_{\text{rotation, $\det = -1$}}$
+\ruler
+\textbf{Group structure of isometries}:\\
+$\psi(\ba)=\bA\ba+\bt$, $\bA$ is orthogonal matrix.\\
+$\psi_1(\ba)=\bA_1\ba+\bt_1, \psi_2(\ba)=\bA_2\ba+\bt_2$,
+$\psi_1\circ\psi_2(\ba)=(\bA_1\bA_2)\ba+(\bA_1\bt_2+\bt_1)$,
+\ruler
+\textbf{Skew-symmetric matrix}:
+$\bS = -\tp{\bS}$\\
+\textbf{Cross product Matrix}:\\
+$
+\begin{bmatrix}
+a_1\\
+a_2\\
+a_3
+\end{bmatrix}
+\wedge
+\begin{bmatrix}
+b_1\\
+b_2\\
+b_3
+\end{bmatrix}
+=
+\begin{bmatrix}
+a_2b_3-a_3b_2\\
+a_3b_1-a_1b_3\\
+a_1b_2-a_2b_1
+\end{bmatrix}
+\Rightarrow
+\hat{\ba}
+\defeq
+\begin{bmatrix}
+0 & -a_3 & a_2\\
+a_3 & 0 & -a_1\\
+-a_2 & a_1 & 0
+\end{bmatrix}
+$
+\ruler
+\textbf{Roderigues Formula}:\\
+$\bR = e^{\phi\hat{s}} = \bI + \sin\phi\hat{\bs}+(1-\cos\phi)\hat{\bs}^2$,\\
+$\bs$ is a unit vector along $\omega$ and $\phi = \|\omega\|t$ is the total amount of rotation.
+\ruler
+\textbf{Affine transformations} is a nonsingular linear transformation followed by a translation.
+$\psi(\ba)=\bA\ba+\bt$ ($\det \bA \neq 0$) and preserves parallelism and midpoints
+and does \textbf{not} preserve lengths, angles, areas.\\
+Ex. rotation, anisotropic scaling, sheer.\\
+\columnbreak
+\textbf{Degrees of freedom}:\\
+2D: isometry: $1 + 2 = 3$, affine: $4 + 2 = 6$\\
+3D: isometry: $3 + 3 = 6$, affine: $9 + 3 = 12$
+
+\section{Optical Flow}
+Motion at 3D world projects to motion in the image. At every point $(x,y)$ in the image we get a
+2D vector, corresponding to the motion of the feature located at that point.\\
+\textbf{egomotion} is the optical flow field of a moving observer.
+\ruler
+$\bt$ is translational velocity of camera, $\bomega$ is angular velocity of camera.
+$
+\begin{bmatrix}
+u\\v
+\end{bmatrix}
+=
+\frac{1}{Z}
+\begin{bmatrix}
+-1 & 0 & x\\
+0  & -1 & y
+\end{bmatrix}
+\begin{bmatrix}
+t_x\\t_y\\t_z
+\end{bmatrix}
++
+\begin{bmatrix}
+xy & -(1+x^2) & y\\
+1+y^2 & -xy & -x
+\end{bmatrix}
+\begin{bmatrix}
+\omega_x\\\omega_y\\\omega_z
+\end{bmatrix}
+$
+
+\section{Radiometry of Image Formation}
+\textbf{Irradiance}:\\
+$I(x,y)$ measures how much light is captured at pixel $(x,y)$.
+Radiant power per unit area with units W/$\text{m}^2$, denoted by E.
+\ruler
+$L = \frac{\text{Power}}{(dAcos\theta)(d\omega)}$, units are $Wm^{-2}sr^{-1}$.
+\ruler
+\textbf{Lambertian model}: $L = \rho\lambda n \cdot s$
+
 \end{multicols*}
 \end{document}
